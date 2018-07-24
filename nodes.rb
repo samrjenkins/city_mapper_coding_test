@@ -12,4 +12,12 @@ class Nodes
   def all
     @nodes
   end
+
+  def find(id)
+    all.find { |node| node.id == id }
+  end
+
+  def find_current
+    all.find { |node| node.current}
+  end
 end

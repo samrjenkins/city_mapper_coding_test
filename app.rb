@@ -14,7 +14,7 @@ nodes = Nodes.new
 
 number_nodes = raw_data_array.first.first.to_i
 node_ids = raw_data_array.slice(1, number_nodes).flatten
-unvisited_nodes = node_ids.map { |node| Node.new(node)}
+node_ids.each { |node_id| nodes.new_node(node_id) }
 
 # create hash of edges: { nodes: [node1, node2], distance: 123m }
 number_edges = raw_data_array[number_nodes + 1].first.to_i
@@ -33,17 +33,17 @@ end
 # tentative distance is 0 for starting node and infinity for all others
 # assign to each node a way of identifying the current node
 
-initial_node = unvisited_nodes.find { |node| node.id == ARGV[1]}
+initial_node = nodes.find(ARGV[1])
 initial_node.current = true
 initial_node.tentative_distance = 0
-final_node = unvisited_nodes.find { |node| node.id == ARGV[2]}
+final_node = nodes.find(ARGV[2])
 
 
-def dijkstra_iteration(unvisited_nodes, edges)
-  current_node = unvisited_nodes.find { |node| node.current }
+def dijkstra_iteration(nodes, edges)
+  current_node = nodes.find_current
   adjacent_edges = edges.select { |edge| edge[:nodes].include?(current_node.id)}
   neighbour_node_ids = adjacent_edges.map { |edge| edge[:nodes].find { |node| node != current_node.id}}
-  neighbour_nodes = neighbour_node_ids.map { |id| unvisited_nodes.find { |node| node.id == id } }
+  neighbour_nodes = neighbour_node_ids.map { |id| nodes.find(id) }
 end
 
-p dijkstra_iteration(unvisited_nodes, edges)
+p dijkstra_iteration(nodes, edges)
