@@ -1,6 +1,7 @@
 require 'csv'
 require_relative 'node'
 require_relative 'nodes'
+require 'pry'
 
 # parse raw data into array
 raw_data_array = []
@@ -32,24 +33,25 @@ end
 
 
 initial_node = nodes.find(ARGV[1])
-initial_node.current = true
 initial_node.distance = 0
 final_node = nodes.find(ARGV[2])
 
 def dijkstra_iteration(nodes, edges)
   nodes.new_current
   current_node = nodes.find_current
-  current_node.id
   adjacent_edges = edges.select { |edge| edge[:nodes].include?(current_node.id)}
   neighbour_node_ids = adjacent_edges.map { |edge| edge[:nodes].find { |node| node != current_node.id}}
   neighbour_nodes = neighbour_node_ids.map { |id| nodes.find(id) }
   unvisited_neighbour_nodes = neighbour_nodes.select { |node| !node.visited }
   unvisited_neighbour_nodes.each_with_index do |node, i|
-    node.distance = current_node.distance + adjacent_edges[i][:distance] if node.distance > adjacent_edges[i][:distance]
+    if node.distance > (current_node.distance + adjacent_edges[i][:distance])
+      node.distance = current_node.distance + adjacent_edges[i][:distance]
+    end
   end
   current_node.visited = true
   current_node.current = false
-  # p current_node.distance
+  p current_node.id
+  p current_node.distance
 end
 
 until final_node.visited
