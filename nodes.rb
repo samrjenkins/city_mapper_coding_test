@@ -13,11 +13,27 @@ class Nodes
     @nodes
   end
 
+  def visited
+    @nodes.select { |node| node.visited }
+  end
+
+  def unvisited
+    @nodes.select { |node| !node.visited }
+  end
+
   def find(id)
     all.find { |node| node.id == id }
   end
 
   def find_current
     all.find { |node| node.current}
+  end
+
+  def min_unvisited_distance
+    unvisited.sort { |a,b| a.distance <=> b.distance }
+  end
+
+  def new_current
+    unvisited.min_by { |node| node.distance }.current = true
   end
 end

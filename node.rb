@@ -1,10 +1,11 @@
 class Node
   attr_reader :id
-  attr_accessor :tentative_distance, :current
+  attr_accessor :distance, :current, :visited
 
-  def initialize(id, tentative_distance = Float::INFINITY, current = false)
+  def initialize(id, distance = Float::INFINITY, current = false, visited = false)
     @id = id
-    @tentative_distance = tentative_distance
+    @distance = distance
     @current = current
+    @visited = visited
   end
 end
