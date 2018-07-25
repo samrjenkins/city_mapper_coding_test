@@ -34,6 +34,8 @@ class Nodes
   end
 
   def new_current
-    unvisited.min_by { |node| node.distance }.current = true
+    node = unvisited.min_by { |node| node.distance }
+    node.current = true
+    node
   end
 end

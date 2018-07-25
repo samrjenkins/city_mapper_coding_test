@@ -1,3 +1,5 @@
+##### CONVERT BIG ARRAYS TO HASHES!!!
+
 require 'csv'
 require_relative 'node'
 require_relative 'nodes'
@@ -37,9 +39,8 @@ initial_node.distance = 0
 final_node = nodes.find(ARGV[2])
 
 def dijkstra_iteration(nodes, edges)
-  nodes.new_current
-  current_node = nodes.find_current
-  adjacent_edges = edges.select { |edge| edge[:nodes].include?(current_node.id)}
+  current_node = nodes.new_current
+  adjacent_edges = edges.select { |edge| edge[:nodes].include?(current_node.id) }
   neighbour_node_ids = adjacent_edges.map { |edge| edge[:nodes].find { |node| node != current_node.id}}
   neighbour_nodes = neighbour_node_ids.map { |id| nodes.find(id) }
   unvisited_neighbour_nodes = neighbour_nodes.select { |node| !node.visited }
@@ -50,12 +51,13 @@ def dijkstra_iteration(nodes, edges)
   end
   current_node.visited = true
   current_node.current = false
-  p current_node.id
-  p current_node.distance
 end
 
+start_time = Time.now
 until final_node.visited
   dijkstra_iteration(nodes, edges)
 end
+end_time = Time.now
 
 p final_node.distance
+p (end_time - start_time)
