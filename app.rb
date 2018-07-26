@@ -1,5 +1,3 @@
-##### CONVERT BIG ARRAYS TO HASHES!!!
-
 require 'csv'
 require_relative 'node'
 require_relative 'nodes'
