@@ -20,10 +20,12 @@ Each iteration of the loop's dijkstra algorithm involves multiple Node lookups w
 I understand that the lookup time for values in a hash is faster than that for elements in an array.
 The Nodes repository array could be simply reformatted as a hash, eg:
 
-```@nodes = {
+```
+@nodes = {
   <node_id>: <instance of Node class>
   ...
   <node_id>: <instance of Node class>
-}```
+}
+```
 
 Upon testing, the runtime of the programme did not improve (it actually got worse) with the use of a hash so I returned to the initial array format.
