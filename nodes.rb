@@ -25,10 +25,6 @@ class Nodes
     all.find { |node| node.id == id }
   end
 
-  def find_current
-    all.find { |node| node.current}
-  end
-
   def min_unvisited_distance
     unvisited.sort { |a,b| a.distance <=> b.distance }
   end
